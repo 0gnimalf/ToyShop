@@ -29,5 +29,5 @@ public class UserWeb {
     private Cart cart;
 
     @OneToMany
-    private List<Order> orders;
+    private List<Purchase> purchases;
 }

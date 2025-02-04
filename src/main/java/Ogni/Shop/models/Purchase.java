@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table
-public class Order {
+public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,10 +19,10 @@ public class Order {
     @ManyToMany
     private List<Product> products;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime orderTime;
+    private LocalDateTime time;
     private Double totalPrice;
     private String comment;
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private PurchaseStatus status;
 
 }

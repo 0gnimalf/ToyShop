@@ -3,12 +3,12 @@ package Ogni.Shop.models;
 import lombok.Getter;
 
 @Getter
-public enum OrderStatus {
+public enum PurchaseStatus {
     inProcessing("В обработке"),
     accepted("Принят"),
     sent("Отправлен"),
     completed("Завершен"),
     other("Иное");
     private final String name;
-    OrderStatus(String name) {this.name = name;}
+    PurchaseStatus(String name) {this.name = name;}
 }
