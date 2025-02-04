@@ -19,4 +19,7 @@ public class UserService implements UserDetailsService {
                 ()-> new UsernameNotFoundException("Username " + username + " not found"));
         return new UserDetailsCustom(userWeb.getUsername(), userWeb.getPassword(), userWeb.getRoles());
     }
+    public boolean existsByUsername(String username) {return userRepo.existsByUsername(username);}
+    public boolean existsByEmail(String email) {return userRepo.existsByEmail(email);}
+    public void save(UserWeb user) {userRepo.save(user);}
 }
