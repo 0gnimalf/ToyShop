@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <title>About</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/style/main-style.css">
 </head>
-<body>
-<!--<div th:if="!${anonymous}">-->
-<!--    &lt;!&ndash; Навигационная панель &ndash;&gt;-->
-<!--    <div id="navbar"></div>-->
-<!--    <div th:replace="~{fragments/navigation-user :: navbar}"></div>-->
-<!--</div>-->
+<body class="background-color">
+<div th:if="${anonymous}">
+    <!-- Навигационная панель -->
+    <div id="navbar"></div>
+    <div th:replace="~{fragments/navigation-main :: navbar}"></div>
+</div>
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 bg-light p-4 rounded">
+        <div class="col-md-6 card p-4 rounded">
             <h2>О сайте</h2>
             <p>
                 Добро пожаловать на мой сайт!

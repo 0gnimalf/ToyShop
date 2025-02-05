@@ -12,6 +12,8 @@ public class ProductGroup {
     private Long id;
     private String name;
     private String description;
+    @Enumerated(EnumType.STRING)
+    private ProductType type;
     @ManyToOne
     private Material material;
     private String size;

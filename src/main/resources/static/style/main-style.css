@@ -1,0 +1,63 @@
+/* Основные цвета */
+:root {
+    --gigas-50: #eff0fe;
+    --gigas-100: #e2e5fd;
+    --gigas-200: #cacffb;
+    --gigas-300: #aaaff7;
+    --gigas-400: #8b88f1;
+    --gigas-500: #766be9;
+    --gigas-600: #674fdc;
+    --gigas-700: #5840c2;
+    --gigas-800: #4e3baa;
+    --gigas-900: #3d337c;
+    --gigas-950: #251e48;
+    --gigas-1000: #17132F;
+}
+
+/* Общий фон */
+body {
+    background-color: var(--gigas-50);
+    color: var(--gigas-900);
+}
+
+/* Навигационное меню */
+.navbar {
+    background-color: var(--gigas-300);
+}
+
+.navbar .nav-link {
+    color: var(--gigas-1000);
+    font-weight: bold;
+}
+
+.navbar .nav-link:hover {
+    color: var(--gigas-600);
+}
+
+/* Основные заголовки */
+h1, h2, h3 {
+    color: var(--gigas-800);
+}
+
+/* Важные акценты */
+.accent {
+    color: var(--gigas-600);
+    font-weight: bold;
+}
+
+/* Кнопки */
+.btn-primary {
+    background-color: var(--gigas-600);
+    border-color: var(--gigas-700);
+}
+
+.btn-primary:hover {
+    background-color: var(--gigas-700);
+    border-color: var(--gigas-800);
+}
+
+/* Фон карточек */
+.card {
+    background-color: var(--gigas-100);
+    border: 1px solid var(--gigas-300);
+}
