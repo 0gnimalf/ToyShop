@@ -10,11 +10,12 @@ import Ogni.Shop.repositories.ProductRepo;
 import Ogni.Shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,7 +29,23 @@ public class AdminController {
     @Autowired
     private ProductRepo productRepo;
 
-
+    @GetMapping("/product")
+    public String products(Model model,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "keyword", required = false) String keyword) {
+        int pageSize = 10;
+//        Page<Product> list = productService.getPageSpec(keyword, (PageRequest.of(page, pageSize)));
+        Page<Product> list = productService.findAll(PageRequest.of(page, pageSize));
+        if (!list.isEmpty()) {
+            model.addAttribute("list", list);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", list.getTotalPages());
+        } else {
+            model.addAttribute("list", Page.empty());
+        }
+        model.addAttribute("keyword", keyword);
+        return "admin/product/all-products";
+    }
 
     @GetMapping("/product/new")
     public String getNewProduct(Model model, @RequestParam(name = "error", required = false) String error) {
