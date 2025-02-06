@@ -11,7 +11,6 @@ import Ogni.Shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class AdminController {
                            @RequestParam(name = "keyword", required = false) String keyword) {
         int pageSize = 10;
 //        Page<Product> list = productService.getPageSpec(keyword, (PageRequest.of(page, pageSize)));
-        Page<Product> list = productService.findAll(PageRequest.of(page, pageSize));
+        Page<Product> list = productService.getAll(PageRequest.of(page, pageSize));
         if (!list.isEmpty()) {
             model.addAttribute("list", list);
             model.addAttribute("currentPage", page);
@@ -62,7 +61,7 @@ public class AdminController {
             return "redirect:/admin/product?error=duplicate";
         }
         productRepo.save(product);
-        return "redirect:/admin/material";
+        return "redirect:/admin/product/all-products";
     }
 
     @GetMapping("/material/new")
@@ -79,7 +78,7 @@ public class AdminController {
             return "redirect:/admin/material?error=duplicate";
         }
         materialRepo.save(material);
-        return "redirect:/admin/material";
+        return "redirect:/admin/material/all-materials";
     }
 
     @GetMapping("/group/new")
@@ -98,6 +97,6 @@ public class AdminController {
             return "redirect:/admin/group?error=duplicate";
         }
         groupRepo.save(group);
-        return "redirect:/admin/group";
+        return "redirect:/admin/group/all-groups";
     }
 }

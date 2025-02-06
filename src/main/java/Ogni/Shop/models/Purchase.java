@@ -21,6 +21,7 @@ public class Purchase {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime time;
     private Double totalPrice;
+    @Lob
     private String comment;
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;

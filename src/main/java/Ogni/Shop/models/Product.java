@@ -14,4 +14,5 @@ public class Product {
     private ProductGroup group;
     private String name;
     private String feature;
+    private String mainPhotoPath;
 }

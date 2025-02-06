@@ -6,11 +6,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table
-public class Material {
+public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    @Lob
-    private String description;
+    private Long productId;
+    private String path;
 }

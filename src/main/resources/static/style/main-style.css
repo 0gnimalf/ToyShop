@@ -46,6 +46,17 @@ h1, h2, h3 {
 }
 
 /* Кнопки */
+.btn-outline-primary {
+    color: var(--gigas-500);
+    border-color: var(--gigas-500);
+}
+.btn-outline-primary:hover {
+    color: var(--gigas-600);
+    background-color: var(--gigas-200);
+    border-color: var(--gigas-600);
+}
+
+
 .btn-primary {
     background-color: var(--gigas-600);
     border-color: var(--gigas-700);
@@ -60,4 +71,10 @@ h1, h2, h3 {
 .card {
     background-color: var(--gigas-100);
     border: 1px solid var(--gigas-300);
+}
+
+/* Другое */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(68%) sepia(61%) saturate(326%) hue-rotate(250deg);
 }
