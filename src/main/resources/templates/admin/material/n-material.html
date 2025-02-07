@@ -20,7 +20,7 @@
         <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required><br>
 
         <label for="description" class="form-label">Описание:</label>
-        <input type="text" id="description" name="description" class="form-control" th:field="*{description}"><br>
+        <textarea id="description" name="description" class="form-control" th:field="*{description}" style="height: auto; min-height: 80px;"></textarea><br>
 
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>

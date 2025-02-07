@@ -12,6 +12,7 @@
         <thead class="table-light">
         <tr>
             <th>ID</th>
+            <th>Тип</th>
             <th>Группа продукта</th>
             <th>Название</th>
             <th>Характеристика</th>
@@ -21,13 +22,14 @@
         <tbody>
         <tr th:each="product : ${list}">
             <td th:text="${product.id}"></td>
+            <td th:text="${product.group.type.name}"></td>
             <td th:text="${product.group.name}"></td>
-            <td th:text="${product.name}"></td>
+            <td><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></td>
             <td th:text="${product.feature}"></td>
             <td>
                 <div class="btn-group" role="group">
-                    <a th:href="@{/admin/products/{id}/edit(id=${product.id})}" class="btn btn-warning btn-sm">Редактировать</a>
-                    <a th:href="@{/admin/products/{id}/delete(id=${product.id})}" class="btn btn-danger btn-sm"
+                    <a th:href="@{/admin/product/{id}/edit(id=${product.id})}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a th:href="@{/admin/product/{id}/delete(id=${product.id})}" class="btn btn-danger btn-sm"
                        onclick="return confirm('Вы уверены, что хотите удалить продукт?');">Удалить</a>
                 </div>
             </td>
@@ -39,9 +41,9 @@
         <span>Страница <span th:text="${currentPage + 1}"></span> из <span th:text="${totalPages}"></span></span>
         <div th:with="queryString=(${keyword != null} ? '&keyword=' + ${keyword} : '')">
             <a th:if="${currentPage > 0}"
-               th:href="@{'/admin/products?page=' + ${currentPage - 1} + ${queryString}}">Назад</a>
+               th:href="@{'/admin/product?page=' + ${currentPage - 1} + ${queryString}}">Назад</a>
             <a th:if="${currentPage < totalPages - 1}"
-               th:href="@{'/admin/products?page=' + ${currentPage + 1} + ${queryString}}">Вперед</a>
+               th:href="@{'/admin/product?page=' + ${currentPage + 1} + ${queryString}}">Вперед</a>
         </div>
     </div>
 </div>

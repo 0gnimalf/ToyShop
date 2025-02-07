@@ -7,6 +7,7 @@ import Ogni.Shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +36,20 @@ public class ProductController {
 
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("link", link);
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))){
+            model.addAttribute("admin", true);
+        }
     }
 
+    @GetMapping("/")
+    public String getAll(Model model,
+                         @RequestParam(name = "page", defaultValue = "1") int page,
+                         @RequestParam(name = "keyword", required = false) String keyword) {
+        Page<Product> list = productService.getAll(PageRequest.of(page-1, pageSize));
+        addPageToModel(model, list, page, keyword, "Каталог", "");
+        return "showroom";
+    }
 
     @GetMapping("/soft-toys")
     public String getToys(Model model,

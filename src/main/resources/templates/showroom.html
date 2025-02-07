@@ -8,6 +8,10 @@
 </head>
 <body>
 <header>
+    <div th:if="not (${admin} == null) and ${admin}">
+        <div id="admin-navbar"></div>
+        <div th:replace="~{fragments/navigation-admin :: admin-navbar}"></div>
+    </div>
   <div id="navbar"></div>
   <div th:replace="~{fragments/navigation-main :: navbar}"></div>
 </header>
