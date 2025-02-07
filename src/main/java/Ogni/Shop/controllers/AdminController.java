@@ -61,7 +61,7 @@ public class AdminController {
             return "redirect:/admin/product?error=duplicate";
         }
         productRepo.save(product);
-        return "redirect:/admin/product/all-products";
+        return "redirect:/admin/product";
     }
 
     @GetMapping("/material/new")
@@ -78,7 +78,7 @@ public class AdminController {
             return "redirect:/admin/material?error=duplicate";
         }
         materialRepo.save(material);
-        return "redirect:/admin/material/all-materials";
+        return "redirect:/admin/material";
     }
 
     @GetMapping("/group/new")
@@ -97,6 +97,6 @@ public class AdminController {
             return "redirect:/admin/group?error=duplicate";
         }
         groupRepo.save(group);
-        return "redirect:/admin/group/all-groups";
+        return "redirect:/admin/group";
     }
 }

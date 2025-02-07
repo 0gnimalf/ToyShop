@@ -2,6 +2,7 @@ package Ogni.Shop.services;
 
 import Ogni.Shop.models.Product;
 import Ogni.Shop.models.ProductGroup;
+import Ogni.Shop.models.ProductType;
 import Ogni.Shop.repositories.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,5 +28,10 @@ public class ProductService {
         Specification<Product> spec = Specification
                 .where(ProductSpecifications.inGroup(group));
         return productRepo.findAll(spec);
+    }
+    public Page<Product> getByType(ProductType type, Pageable pageable){
+        Specification<Product> spec = Specification
+                .where(ProductSpecifications.belongToType(type));
+        return productRepo.findAll(spec, pageable);
     }
 }
