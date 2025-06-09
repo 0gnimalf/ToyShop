@@ -1,5 +1,6 @@
 package Ogni.Shop.services;
 
+import Ogni.Shop.models.Photo;
 import Ogni.Shop.models.Product;
 import Ogni.Shop.models.ProductGroup;
 import Ogni.Shop.models.ProductType;
@@ -16,6 +17,8 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private PhotoService photoService;
 //    public Page<Product> getPage(String keyword, Pageable pageable) {
 //        Specification<Flight> specification = Specification
 //                .where(FlightSpecifications.hasKeyword(keyword))
@@ -33,5 +36,13 @@ public class ProductService {
         Specification<Product> spec = Specification
                 .where(ProductSpecifications.belongToType(type));
         return productRepo.findAll(spec, pageable);
+    }
+
+    public void deleteById(Long id) {
+        List<String> photos = photoService.getPathsByProductId(id);
+        for (String photo : photos) {
+            photoService.deleteFileFromDisk(photo);
+        }
+        productRepo.deleteById(id);
     }
 }

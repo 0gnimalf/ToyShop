@@ -86,7 +86,7 @@ public class AdminController {
 
     @GetMapping("/product/{id}/delete")
     public String deleteProduct(@PathVariable Long id) {
-        productRepo.deleteById(id);
+        productService.deleteById(id);
         return "redirect:/admin/product";
     }
 
