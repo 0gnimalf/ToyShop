@@ -6,8 +6,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" >
 </head>
 <body>
+<!-- Навигационная панель -->
+<div id="admin-navbar"></div>
+<div th:replace="~{fragments/navigation-admin :: admin-navbar}"></div>
 <div class="container mt-4">
-    <h1>Список всех продуктов</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Список всех продуктов</h1>
+        <a th:href="@{/admin/product/new}" class="btn btn-success">Добавить продукт</a>
+    </div>
     <table class="table table-bordered table-hover">
         <thead class="table-light">
         <tr>
