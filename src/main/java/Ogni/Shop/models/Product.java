@@ -14,5 +14,9 @@ public class Product {
     private ProductGroup group;
     private String name;
     private String feature;
-    private String mainPhotoPath;
+    @OneToOne
+    private Photo mainPhoto;
+    public String getSafePhotoPath() {
+        return mainPhoto != null ? mainPhoto.getPath() : "/images/placeholder-photo.png";
+    }
 }

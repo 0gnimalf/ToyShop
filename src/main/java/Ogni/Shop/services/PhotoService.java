@@ -43,6 +43,17 @@ public class PhotoService {
         photoRepo.delete(photo);
     }
 
+    public Photo saveMainPhoto(Long productId, MultipartFile file) {
+        String filePath = saveFileToDisk(productId, file);
+        Photo photo = new Photo();
+        photo.setProductId(productId);
+        photo.setPath(filePath);
+        photoRepo.save(photo);
+
+
+        return photo;
+    }
+
     private String saveFileToDisk(Long productId, MultipartFile file) {
         String uploadDir = "public";
         File uploadFolder = new File(uploadDir);

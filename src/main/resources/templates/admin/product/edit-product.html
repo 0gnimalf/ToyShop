@@ -10,7 +10,10 @@
 <div id="admin-navbar"></div>
 <div th:replace="~{fragments/navigation-admin :: admin-navbar}"></div>
 <div class="container mt-4">
-  <h1>Редактирование продукта</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Редактирование продукта</h1>
+        <a th:href="@{/admin/product/{id}/photo(id=${product.id})}" class="btn btn-success">Фото</a>
+    </div>
   <form th:action="@{/admin/product/{id}(id=${product.id})}" th:object="${product}" method="post">
 <!--    class="needs-validation"-->
     <div class="mb-3">

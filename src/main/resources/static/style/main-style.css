@@ -78,3 +78,29 @@ h1, h2, h3 {
 .carousel-control-next-icon {
     filter: invert(68%) sepia(61%) saturate(326%) hue-rotate(250deg);
 }
+.preview-scroll-container {
+    padding-bottom: 5px;
+    scrollbar-width: thin;
+}
+
+.preview-scroll-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.preview-scroll-container::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 3px;
+}
+
+.preview-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+.preview-thumbnail {
+    border: 2px solid transparent;
+    padding: 3px;
+    transition: border-color 0.2s;
+}
+
+.preview-thumbnail.active {
+    border-color: var(--gigas-700); /* синий Bootstrap */
+}

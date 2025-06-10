@@ -12,16 +12,34 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="row g-3">
+                <!-- Основное фото -->
+                <div class="col-md-3">
+                    <div class="card border-primary">
+                        <img th:if="${mainPhoto != null}" th:src="@{${mainPhoto.path}}" class="card-img-top" alt="Основное фото">
+                        <img th:if="${mainPhoto == null}" th:src="@{/images/placeholder-photo.png}" class="card-img-top" alt="Плейсхолдер">
+                        <div class="card-body text-center">
+                            <strong>Основное фото</strong>
+                            <form th:action="@{'/admin/product/' + ${productId} + '/main-photo'}"
+                                  method="post" enctype="multipart/form-data" class="mt-2">
+                                <input type="file" name="mainPhoto" class="form-control mb-2" required>
+                                <input type="hidden" name="oldMainPhoto" th:value="${mainPhoto != null ? mainPhoto.id : '-1'}">
+                                <button type="submit" class="btn btn-outline-primary btn-sm">Изменить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <th:block th:each="photo : ${photos}">
                     <div class="col-md-3">
                         <div class="card">
                             <img th:src="@{${photo.path}}" class="card-img-top" alt="Photo">
-                            <div class="card-body text-center">
-                                <form th:action="@{'/admin/photo/' + ${photo.id} + '/delete'}" method="post">
-                                    <input type="hidden" name="productId" th:value="${photo.productId}">
-                                    <button class="btn btn-danger btn-sm" type="submit"
-                                            onclick="return confirm('Вы уверены, что хотите удалить фото?');">Удалить</button>
-                                </form>
+                            <div th:if="${mainPhoto != photo}">
+                                <div class="card-body text-center">
+                                    <form th:action="@{'/admin/photo/' + ${photo.id} + '/delete'}" method="post">
+                                        <input type="hidden" name="productId" th:value="${photo.productId}">
+                                        <button class="btn btn-danger btn-sm" type="submit"
+                                                onclick="return confirm('Вы уверены, что хотите удалить фото?');">Удалить</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -34,7 +52,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Добавить новые фото</h5>
-            <form th:action="@{'/admin/product/' + ${productId} + '/upload'}" method="post" enctype="multipart/form-data">
+            <form th:action="@{'/admin/product/' + ${productId} + '/photo'}" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <input type="file" name="files" class="form-control" multiple required>
                 </div>

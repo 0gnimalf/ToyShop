@@ -37,6 +37,9 @@ public class ProductService {
                 .where(ProductSpecifications.belongToType(type));
         return productRepo.findAll(spec, pageable);
     }
+    public void update(Product product) {
+        productRepo.save(product);
+    }
 
     public void deleteById(Long id) {
         List<String> photos = photoService.getPathsByProductId(id);
