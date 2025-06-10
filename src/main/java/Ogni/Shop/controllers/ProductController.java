@@ -31,6 +31,8 @@ public class ProductController {
             model.addAttribute("totalPages", list.getTotalPages());
         } else {
             model.addAttribute("list", Page.empty());
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("totalPages", 1);
         }
         model.addAttribute("keyword", keyword);
 
@@ -67,7 +69,22 @@ public class ProductController {
         addPageToModel(model, list, page, keyword, "Брелоки", "keychains");
         return "showroom";
     }
-
+    @GetMapping("/sets")
+    public String getSets(Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "keyword", required = false) String keyword){
+        Page<Product> list = productService.getByType(ProductType.set, PageRequest.of(page - 1, pageSize));
+        addPageToModel(model, list, page, keyword, "Наборы", "sets");
+        return "showroom";
+    }
+    @GetMapping("/other")
+    public String getOther(Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "keyword", required = false) String keyword){
+        Page<Product> list = productService.getByType(ProductType.other, PageRequest.of(page - 1, pageSize));
+        addPageToModel(model, list, page, keyword, "Другое", "other");
+        return "showroom";
+    }
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable Long id, Model model) {
         Product product = productService.getById(id);

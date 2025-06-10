@@ -5,7 +5,7 @@ mvnw
 mvnw.cmd
 .mvn/
 data/
-#src/main/resources/static/images
+public/
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

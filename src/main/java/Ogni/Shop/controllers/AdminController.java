@@ -80,6 +80,7 @@ public class AdminController {
 
     @PostMapping("/product/{id}")
     public String updateProduct(@ModelAttribute Product product) {
+        product.setMainPhoto(productService.getById(product.getId()).getMainPhoto());
         productRepo.save(product);
         return "redirect:/admin/product";
     }
