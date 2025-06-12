@@ -16,6 +16,12 @@
 
 <div class="container mt-5">
     <h1 class="text-center mb-4" th:text="${pageTitle}"></h1>
+    <form class="mb-4" method="get" th:action="@{/{link}(link=${link})}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Поиск..." name="keyword" th:value="${keyword}">
+            <button class="btn btn-primary" type="submit">Поиск</button>
+        </div>
+    </form>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
         <!-- Карточки товаров-->
         <th:block th:each="product : ${list}">
@@ -38,15 +44,15 @@
     <nav class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage - 1})}"><-</a>
+                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage - 1}, keyword=${keyword})}"><-</a>
             </li>
             <th:block th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
                 <li class="page-item" th:classappend="${currentPage == pageNum} ? 'active'">
-                    <a class="page-link" th:href="@{/{link}(link=${link}, page=${pageNum})}" th:text="${pageNum}"></a>
+                    <a class="page-link" th:href="@{/{link}(link=${link}, page=${pageNum}, keyword=${keyword})}" th:text="${pageNum}"></a>
                 </li>
             </th:block>
             <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage + 1})}">-></a>
+                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage + 1}, keyword=${keyword})}">-></a>
             </li>
         </ul>
     </nav>

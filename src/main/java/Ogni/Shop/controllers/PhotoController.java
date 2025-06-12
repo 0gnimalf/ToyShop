@@ -38,7 +38,7 @@ public class PhotoController {
         product.setMainPhoto(newPhoto);
         productService.update(product);
 //        if (oldPhoto!= -1){
-//            photoService.deletePhoto(oldPhoto);
+//            photoService.deletePhotoById(oldPhoto);
 //        }
 
         return "redirect:/admin/product/" + id + "/photo"; // или куда ты ведёшь
@@ -54,7 +54,7 @@ public class PhotoController {
     @PostMapping("/photo/{id}/delete")
     public String deletePhoto(@PathVariable Long id,
                               @RequestParam("productId") Long productId) {
-        photoService.deletePhoto(id);
+        photoService.deletePhotoById(id);
         return "redirect:/admin/product/" + productId + "/photo";
     }
 

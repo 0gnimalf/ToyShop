@@ -19,33 +19,28 @@ public class ProductService {
     private ProductRepo productRepo;
     @Autowired
     private PhotoService photoService;
-//    public Page<Product> getPage(String keyword, Pageable pageable) {
-//        Specification<Flight> specification = Specification
-//                .where(FlightSpecifications.hasKeyword(keyword))
-//                .and(FlightSpecifications.inDateRange(startDate, endDate));
-//
-//        return repo.getAll(specification, pageable);}
-    public Page<Product> getAll(Pageable pageable) {return productRepo.findAll(pageable);}
+    public Page<Product> getAllSpec(String keyword, Pageable pageable) {
+        Specification<Product> specification = Specification
+                .where(ProductSpecifications.hasKeyword(keyword));
+        return productRepo.findAll(specification, pageable);}
+//    public Page<Product> getAll(Pageable pageable) {return productRepo.findAll(pageable);}
     public Product getById(Long id) {return productRepo.findById(id).get();}
     public List<Product> getByGroup(ProductGroup group){
         Specification<Product> spec = Specification
                 .where(ProductSpecifications.inGroup(group));
         return productRepo.findAll(spec);
     }
-    public Page<Product> getByType(ProductType type, Pageable pageable){
+    public Page<Product> getByTypeSpec(String keyword, ProductType type, Pageable pageable){
         Specification<Product> spec = Specification
-                .where(ProductSpecifications.belongToType(type));
+                .where(ProductSpecifications.belongToType(type)
+                        .and(ProductSpecifications.hasKeyword(keyword)));
         return productRepo.findAll(spec, pageable);
     }
     public void update(Product product) {
         productRepo.save(product);
     }
-
     public void deleteById(Long id) {
-        List<String> photos = photoService.getPathsByProductId(id);
-        for (String photo : photos) {
-            photoService.deleteFileFromDisk(photo);
-        }
+        photoService.deleteAllByProductId(id);
         productRepo.deleteById(id);
     }
 }

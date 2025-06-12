@@ -28,19 +28,32 @@ public class AdminController {
     @Autowired
     private ProductRepo productRepo;
 
-    private void returnValuesToModel(Model model){
+    private void addValuesToModel(Model model){
         model.addAttribute("groups", groupRepo.findAll());
         model.addAttribute("materials", materialRepo.findAll());
         model.addAttribute("types", ProductType.values());
     }
 
+    private void addPageToModel(Model model, Page<Product> list,
+                                int currentPage, String keyword) {
+        if (!list.isEmpty()) {
+            model.addAttribute("list", list);
+            model.addAttribute("currentPage", currentPage);
+            model.addAttribute("totalPages", list.getTotalPages());
+        } else {
+            model.addAttribute("list", Page.empty());
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("totalPages", 1);
+        }
+        model.addAttribute("keyword", keyword);
+    }
+
     @GetMapping("/product")
     public String products(Model model,
-                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "page", defaultValue = "1") int page,
                            @RequestParam(name = "keyword", required = false) String keyword) {
         int pageSize = 10;
-//        Page<Product> list = productService.getPageSpec(keyword, (PageRequest.of(page, pageSize)));
-        Page<Product> list = productService.getAll(PageRequest.of(page, pageSize));
+        Page<Product> list = productService.getAllSpec(keyword, PageRequest.of(page-1, pageSize));
         if (!list.isEmpty()) {
             model.addAttribute("list", list);
             model.addAttribute("currentPage", page);
@@ -57,7 +70,7 @@ public class AdminController {
         if (error!=null && error.equals("duplicate")) {
             model.addAttribute("error", "Такой продукт уже существует");
         }
-        returnValuesToModel(model);
+        addValuesToModel(model);
         model.addAttribute("nProduct", new Product());
         return "admin/product/n-product";
     }
@@ -74,7 +87,7 @@ public class AdminController {
     public String editProduct(@PathVariable Long id, Model model) {
         Product product = productService.getById(id);
         model.addAttribute("product", product);
-        returnValuesToModel(model);
+        addValuesToModel(model);
         return "admin/product/edit-product";
     }
 
@@ -127,7 +140,7 @@ public class AdminController {
     public String editMaterial(@PathVariable Long id, Model model) {
         Material material = materialRepo.findById(id).get();
         model.addAttribute("material", material);
-        returnValuesToModel(model);
+        addValuesToModel(model);
         return "admin/material/edit-material";
     }
 
@@ -163,7 +176,7 @@ public class AdminController {
         if (error!=null && error.equals("duplicate")) {
             model.addAttribute("error", "Такая группа уже существует");
         }
-        returnValuesToModel(model);
+        addValuesToModel(model);
         model.addAttribute("nGroup", new ProductGroup());
         return "/admin/group/n-group";
     }
@@ -180,7 +193,7 @@ public class AdminController {
     public String editGroup(@PathVariable Long id, Model model) {
         ProductGroup group = groupRepo.findById(id).get();
         model.addAttribute("group", group);
-        returnValuesToModel(model);
+        addValuesToModel(model);
         return "admin/group/edit-group";
     }
 

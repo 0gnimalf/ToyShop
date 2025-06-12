@@ -55,7 +55,7 @@ public class ProductController {
     public String getAll(Model model,
                          @RequestParam(name = "page", defaultValue = "1") int page,
                          @RequestParam(name = "keyword", required = false) String keyword) {
-        Page<Product> list = productService.getAll(PageRequest.of(page-1, pageSize));
+        Page<Product> list = productService.getAllSpec(keyword, PageRequest.of(page-1, pageSize));
         addPageToModel(model, list, page, keyword, "Каталог", "");
         return "showroom";
     }
@@ -64,7 +64,7 @@ public class ProductController {
     public String getToys(Model model,
                           @RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "keyword", required = false) String keyword) {
-        Page<Product> list = productService.getByType(ProductType.toy, PageRequest.of(page-1, pageSize));
+        Page<Product> list = productService.getByTypeSpec(keyword, ProductType.toy, PageRequest.of(page-1, pageSize));
         addPageToModel(model, list, page, keyword, "Мягкие игрушки", "soft-toys");
         return "showroom";
     }
@@ -72,7 +72,7 @@ public class ProductController {
     public String getKeychains(Model model,
                                @RequestParam(name = "page", defaultValue = "1") int page,
                                @RequestParam(name = "keyword", required = false) String keyword) {
-        Page<Product> list = productService.getByType(ProductType.keychain, PageRequest.of(page - 1, pageSize));
+        Page<Product> list = productService.getByTypeSpec(keyword, ProductType.keychain, PageRequest.of(page - 1, pageSize));
         addPageToModel(model, list, page, keyword, "Брелоки", "keychains");
         return "showroom";
     }
@@ -80,7 +80,7 @@ public class ProductController {
     public String getSets(Model model,
                           @RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "keyword", required = false) String keyword){
-        Page<Product> list = productService.getByType(ProductType.set, PageRequest.of(page - 1, pageSize));
+        Page<Product> list = productService.getByTypeSpec(keyword, ProductType.set, PageRequest.of(page - 1, pageSize));
         addPageToModel(model, list, page, keyword, "Наборы", "sets");
         return "showroom";
     }
@@ -88,7 +88,7 @@ public class ProductController {
     public String getOther(Model model,
                           @RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "keyword", required = false) String keyword){
-        Page<Product> list = productService.getByType(ProductType.other, PageRequest.of(page - 1, pageSize));
+        Page<Product> list = productService.getByTypeSpec(keyword, ProductType.other, PageRequest.of(page - 1, pageSize));
         addPageToModel(model, list, page, keyword, "Другое", "other");
         return "showroom";
     }

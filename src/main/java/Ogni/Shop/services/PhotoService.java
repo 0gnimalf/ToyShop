@@ -37,7 +37,7 @@ public class PhotoService {
         }
     }
 
-    public void deletePhoto(Long photoId) {
+    public void deletePhotoById(Long photoId) {
         Photo photo = photoRepo.findById(photoId).get();
         deleteFileFromDisk(photo.getPath());
         photoRepo.delete(photo);
@@ -49,8 +49,6 @@ public class PhotoService {
         photo.setProductId(productId);
         photo.setPath(filePath);
         photoRepo.save(photo);
-
-
         return photo;
     }
 
@@ -71,10 +69,16 @@ public class PhotoService {
         return "/public/" + fileName;
     }
 
-    void deleteFileFromDisk(String path) {
+    private void deleteFileFromDisk(String path) {
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
         File file = new File(path);
         if (file.exists()) {
             file.delete();
         }
+    }
+    void deleteAllByProductId(Long productId) {
+        photoRepo.findByProductId(productId).forEach(photo -> deleteFileFromDisk(photo.getPath()));
     }
 }

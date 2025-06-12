@@ -14,6 +14,12 @@
         <h1>Список всех продуктов</h1>
         <a th:href="@{/admin/product/new}" class="btn btn-success">Добавить продукт</a>
     </div>
+    <form class="mb-4" method="get" th:action="@{/admin/product}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Поиск..." name="keyword" th:value="${keyword}">
+            <button class="btn btn-primary" type="submit">Поиск</button>
+        </div>
+    </form>
     <table class="table table-bordered table-hover">
         <thead class="table-light">
         <tr>
@@ -43,15 +49,21 @@
         </tbody>
     </table>
 
-    <div th:if="${!list.isEmpty()}">
-        <span>Страница <span th:text="${currentPage + 1}"></span> из <span th:text="${totalPages}"></span></span>
-        <div th:with="queryString=(${keyword != null} ? '&keyword=' + ${keyword} : '')">
-            <a th:if="${currentPage > 0}"
-               th:href="@{'/admin/product?page=' + ${currentPage - 1} + ${queryString}}">Назад</a>
-            <a th:if="${currentPage < totalPages - 1}"
-               th:href="@{'/admin/product?page=' + ${currentPage + 1} + ${queryString}}">Вперед</a>
-        </div>
-    </div>
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/product(page=${currentPage - 1}, keyword=${keyword})}"><-</a>
+            </li>
+            <th:block th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+                <li class="page-item" th:classappend="${currentPage == pageNum} ? 'active'">
+                    <a class="page-link" th:href="@{/admin/product(page=${pageNum}, keyword=${keyword})}" th:text="${pageNum}"></a>
+                </li>
+            </th:block>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/product(page=${currentPage + 1}, keyword=${keyword})}">-></a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <br/><br/><br/><br/><br/><br/>
 </body>

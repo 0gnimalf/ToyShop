@@ -11,7 +11,7 @@ public class ProductGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Lob
+    @Column(length = 3000)
     private String description;
     @Enumerated(EnumType.STRING)
     private ProductType type;
