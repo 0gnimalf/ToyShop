@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title th:text="${pageTitle}"></title>
@@ -8,17 +8,16 @@
 </head>
 <body>
 <header>
-    <div th:if="not (${admin} == null) and ${admin}">
-        <div id="admin-navbar"></div>
+    <div th:if="${admin}">
         <div th:replace="~{fragments/navigation-admin :: admin-navbar}"></div>
     </div>
-  <div id="navbar"></div>
-  <div th:replace="~{fragments/navigation-main :: navbar}"></div>
+    <div th:replace="~{fragments/navigation-main :: navbar}"></div>
 </header>
 
 <div class="container mt-5">
     <h1 class="text-center mb-4" th:text="${pageTitle}"></h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        <!-- Карточки товаров-->
         <th:block th:each="product : ${list}">
             <div class="col">
                 <div class="card h-100 text-center">
@@ -39,7 +38,7 @@
     <nav class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage - 1})}">Предыдущая</a>
+                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage - 1})}"><-</a>
             </li>
             <th:block th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
                 <li class="page-item" th:classappend="${currentPage == pageNum} ? 'active'">
@@ -47,7 +46,7 @@
                 </li>
             </th:block>
             <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage + 1})}">Следующая</a>
+                <a class="page-link" th:href="@{/{link}(link=${link}, page=${currentPage + 1})}">-></a>
             </li>
         </ul>
     </nav>

@@ -23,6 +23,11 @@
             </li>
           </ul>
         </div>
+        <div th:if="${anonymous != null}" class="d-flex">
+          <a th:href="${anonymous} ? '/auth/login' : '/logout'" class="btn btn-outline-secondary me-2">
+            <span th:text="${anonymous} ? 'Войти' : 'Выйти'"></span>
+          </a>
+        </div>
       </div>
     </nav>
 </div>

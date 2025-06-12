@@ -67,6 +67,15 @@ h1, h2, h3 {
     border-color: var(--gigas-800);
 }
 
+.page-item.active .page-link{
+    color: black;
+    border-color: var(--gigas-500);
+    background-color: var(--gigas-300);
+}
+.page-item .page-link{
+    color: var(--gigas-800);
+}
+
 /* Фон карточек */
 .card {
     background-color: var(--gigas-100);

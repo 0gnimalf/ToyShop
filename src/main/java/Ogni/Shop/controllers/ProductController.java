@@ -5,8 +5,11 @@ import Ogni.Shop.models.ProductType;
 import Ogni.Shop.services.PhotoService;
 import Ogni.Shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +19,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProductController {
-    private final int pageSize = 16;
+    @Value("${pageSize}")
+    private int pageSize;
     @Autowired
     ProductService productService;
     @Autowired
     PhotoService photoService;
+
+    static void addAuthInfoToModel(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //[ROLE_ANONYMOUS], [ROLE_USER, ROLE_ADMIN]
+        model.addAttribute("admin", auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        model.addAttribute("anonymous", auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS")));
+    }
 
     private void addPageToModel(Model model, Page<Product> list,
                                 int currentPage, String keyword,
@@ -38,10 +48,7 @@ public class ProductController {
 
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("link", link);
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))){
-            model.addAttribute("admin", true);
-        }
+        addAuthInfoToModel(model);
     }
 
     @GetMapping("/")
@@ -92,6 +99,7 @@ public class ProductController {
         model.addAttribute("variants", productService.getByGroup(product.getGroup()));
         model.addAttribute("photoPaths", photoService.getPathsByProductId(id));
         model.addAttribute("pageTitle", product.getName());
+        addAuthInfoToModel(model);
         return "product";
     }
 }
